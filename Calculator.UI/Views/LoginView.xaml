@@ -1,0 +1,144 @@
+﻿<UserControl x:Class="Calculator.UI.Views.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:validationRules="clr-namespace:Calculator.UI.Validators"
+             xmlns:fa="http://schemas.fontawesome.io/icons/" 
+             xmlns:local="clr-namespace:Calculator.UI.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <UserControl.Background>
+        <ImageBrush ImageSource="/Resources/background.jpg"/>
+    </UserControl.Background>
+
+    <Border  
+        Padding="40 35"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        BorderBrush="White"
+        BorderThickness="4"
+        Background="#F0F0E7"
+        Height="400" Width="400">
+
+        <Grid Grid.IsSharedSizeScope="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0"
+                HorizontalAlignment="Center"
+                FontSize="48"
+                Text="Elections" 
+                Foreground="{StaticResource DarkBrush}"/>
+
+            <TextBlock Grid.Row="1" Margin="0 10"
+                HorizontalAlignment="Center"
+                FontSize="18"
+                FontWeight="Thin"
+                Text="Vote remotely wherever you want!"/>
+
+            <Grid Grid.Row="2" Margin="0 20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Margin="0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                        <ColumnDefinition Width="210" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="Name" FontSize="16" FontWeight="Thin"/>
+                    <TextBox 
+                        Grid.Column="1" 
+                        Margin="20 0 0 0" 
+                        Background="{StaticResource VeryLightBrush}" 
+                        BorderThickness="0 0 0 1"
+                        FontSize="16"
+                        Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+
+                <Grid Grid.Row="1" Margin="0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                        <ColumnDefinition Width="210" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="Last name" FontSize="16" FontWeight="Thin"/>
+                    <TextBox Grid.Column="1"
+                             Margin="20 0 0 0"
+                             Background="{StaticResource  VeryLightBrush }"
+                             BorderThickness="0 0 0 1"
+                             FontSize="16"
+                             Text="{Binding Surename, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+
+                <Grid Grid.Row="2" Margin="0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                        <ColumnDefinition Width="210" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="PESEL" FontSize="16" FontWeight="Thin" />
+                    <TextBox Grid.Column="1" 
+                             Margin="20 0 0 0" 
+                             Background="{StaticResource VeryLightBrush}" 
+                             BorderThickness="0 0 0 1"
+                             FontSize="16">
+                        <Validation.ErrorTemplate>
+                            <ControlTemplate>
+                                <DockPanel>
+                                    <fa:ImageAwesome 
+                                        Icon="LightbulbOutline" 
+                                        Foreground="#800000" 
+                                        Height="20" 
+                                        ToolTip="A valid PESEL number consists of 11 digits."  
+                                        DockPanel.Dock="Right"/>
+                                    <AdornedElementPlaceholder x:Name="ErrorAdorner"></AdornedElementPlaceholder>
+                                </DockPanel>
+                            </ControlTemplate>
+                        </Validation.ErrorTemplate>
+                        <TextBox.Text>
+                            <Binding
+                                Path="Pesel"
+                                UpdateSourceTrigger="PropertyChanged"
+                                Mode="TwoWay"
+                                ValidatesOnNotifyDataErrors="True"
+                                ValidatesOnDataErrors="True"
+                                NotifyOnValidationError="True">
+                                <Binding.ValidationRules>
+                                    <validationRules:PeselValidationRule 
+                                                       ValidatesOnTargetUpdated="True"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+
+                        </TextBox.Text>
+                    </TextBox>
+                </Grid>
+
+                <Button Grid.Row="3" Margin="0 10"
+                    HorizontalAlignment="Center"
+                    Content="Login"
+                    IsDefault="True" 
+                    Width="100"
+                    Height="35"
+                    FontSize="16"
+                    BorderThickness="0"
+                    Background="{StaticResource DarkBrush}"
+                    Foreground="{StaticResource VeryLightBrush}"
+                    Command="{Binding LoginCommand}"
+                    />
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>
